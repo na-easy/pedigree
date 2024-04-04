@@ -2,22 +2,22 @@
   <div>
     <MainGalleryPhoto :photo="photos[selected]"/>
     <div class="button">
-      <button class="button-arrow" @click="() => change(-1)">
+      <button class="button__arrow" @click="() => change(-1)">
         <i class="el-icon-arrow-left"></i>
       </button>
     </div>
     <div class="carousel">
-      <div class="inner" ref="inner" :style="innerStyles">
-        <div class="card" v-for="(photo, index) in photos" :key="index">
+      <div class="carousel__inner" ref="inner" :style="innerStyles">
+        <div class="carousel__inner__card" v-for="(photo, index) in photos" :key="index">
           <img 
-            :class="selected == index ? 'selected' : ''"
+            :class="selected == index ? 'carousel__inner__card__selected' : ''"
             :src="photo.link"
           />
         </div>
       </div>
     </div>
     <div class="button">
-      <button class="button-arrow" @click="() => change(1)">
+      <button class="button__arrow" @click="() => change(1)">
         <i class="el-icon-arrow-right"></i>
       </button>
     </div>
@@ -63,20 +63,16 @@ export default {
       step: ''
     }
   },
-
   mounted () {
     this.selected = Math.round(this.photos.length / 2) - 2
     this.setStep()
     this.resetTranslate()
   },
-
   methods: {
     setStep () {
-      const innerWidth = this.$refs.inner.scrollWidth
       const totalCards = this.cards.length
-      this.step = `${innerWidth / totalCards}px`
+      this.step = `${800 / totalCards}px`
     },
-
     change (change) {
       if (this.transitioning) return
       this.transitioning = true
@@ -98,21 +94,18 @@ export default {
         })
       }
     },
-
     moveLeft () {
       this.innerStyles = {
         transform: `translateX(-${this.step})
           translateX(-${this.step})`
       }
     },
-
     moveRight () {
       this.innerStyles = {
         transform: `translateX(${this.step})
           translateX(${this.step})`
       }
     },
-
     afterTransition (callback) {
       const listener = () => {
         callback()
@@ -120,7 +113,6 @@ export default {
       }
       this.$refs.inner.addEventListener('transitionend', listener)
     },
-
     resetTranslate () {
       this.innerStyles = {
         transition: 'none',
@@ -137,17 +129,17 @@ export default {
   width: 50px;
   height: 50px;
   margin-top: 50px;
-}
 
-.button-arrow {
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #ccc;
-  border: none;
-  cursor: pointer;
+  &__arrow {
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ccc;
+    border: none;
+    cursor: pointer;
+  }
 }
 
 .carousel {
@@ -158,21 +150,21 @@ export default {
   width: 800px;
   height: 100px;
   overflow: hidden;
-}
 
-.inner {
-  transition: transform 0.5s;
-  white-space: nowrap;
-  height: 120px;
-}
+  &__inner {
+    transition: transform 0.5s;
+    white-space: nowrap;
+    height: 120px;
 
-.card {
-  height: 100px;
-  margin-right: 10px;
-  display: inline-flex;
-}
-
-.selected {
-  height: 120px;
+    &__card {
+      height: 100px;
+      margin-right: 10px;
+      display: inline-flex;
+  
+      &__selected {
+        height: 120px;
+      }
+    }
+  }
 }
 </style>
