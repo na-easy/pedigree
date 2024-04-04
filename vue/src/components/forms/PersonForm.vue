@@ -101,11 +101,28 @@
       >
         <div class="person-page__header-wrapper">
           <h3>Ребенок {{ index + 1 }}</h3>
-          <button class="person-page__btn-close" @click="() => removeChildForm(index)">
-            ✖
-          </button>
+          <div class="person-page__buttons-wrapper">
+            <button
+              v-show="index !== 0"
+              class="person-page__button" 
+              @click="() => moveItem('children', index, 'up')" 
+            >
+              ⬆
+            </button>
+            <button
+              v-show="index !== value.children.length - 1"
+              class="person-page__button" 
+              @click="() => moveItem('children', index, 'down')" 
+            >
+              ⬇
+            </button>
+            <button class="person-page__button" @click="() => removeChildForm(index)">
+              ✖
+            </button>
+          </div>
         </div>
         <ChildForm
+          ref="childForm"
           :value="child"
           :persons="childrens"
           @change="(child) => setChildForm(child, index)"
@@ -126,11 +143,28 @@
       >
         <div class="person-page__header-wrapper">
           <h3>Свадьба {{ index + 1 }}</h3>
-          <button class="person-page__btn-close" @click="() => removeWeddingForm(index)">
-            ✖
-          </button>
+          <div class="person-page__buttons-wrapper">
+            <button 
+              v-show="index !== 0"
+              class="person-page__button" 
+              @click="() => moveItem('weddings', index, 'up')" 
+            >
+              ⬆
+            </button>
+            <button 
+              v-show="index !== value.weddings.length - 1"
+              class="person-page__button" 
+              @click="() => moveItem('weddings', index, 'down')" 
+            >
+              ⬇
+            </button>
+            <button class="person-page__button" @click="() => removeWeddingForm(index)">
+              ✖
+            </button>
+          </div>
         </div>
         <WeddingForm
+          ref="weddingForm"
           :value="wedding"
           :persons="partners"
           @change="(wedding) => setWeddingForm(wedding, index)"
@@ -151,11 +185,28 @@
       >
         <div class="person-page__header-wrapper">
           <h3>Военная служба {{ index + 1 }}</h3>
-          <button class="person-page__btn-close" @click="() => removeMilitaryForm(index)">
-            ✖
-          </button>
+          <div class="person-page__buttons-wrapper">
+            <button 
+              v-show="index !== 0"
+              class="person-page__button" 
+              @click="() => moveItem('militaries', index, 'up')"
+            >
+              ⬆
+            </button>
+            <button 
+              v-show="index !== value.militaries.length - 1"
+              class="person-page__button" 
+              @click="() => moveItem('militaries', index, 'down')" 
+            >
+              ⬇
+            </button>
+            <button class="person-page__button" @click="() => removeMilitaryForm(index)">
+              ✖
+            </button>
+          </div>
         </div>
         <MilitaryForm
+          ref="militaryForm"
           :value="military"
           @change="(military) => setMilitaryForm(military, index)"
         />
@@ -175,11 +226,28 @@
       >
         <div class="person-page__header-wrapper">
           <h3>Образование {{ index + 1 }}</h3>
-          <button @click="() => removeEducationForm(index)" class="person-page__btn-close">
-            ✖
-          </button>
+          <div class="person-page__buttons-wrapper">
+            <button 
+              v-show="index !== 0"
+              class="person-page__button" 
+              @click="() => moveItem('educations', index, 'up')" 
+            >
+              ⬆
+            </button>
+            <button 
+              v-show="index !== value.educations.length - 1"
+              class="person-page__button" 
+              @click="() => moveItem('educations', index, 'down')" 
+            >
+              ⬇
+            </button>
+            <button @click="() => removeEducationForm(index)" class="person-page__button">
+              ✖
+            </button>
+          </div>
         </div>
         <EducationForm
+          ref="educationForm"
           :value="education"
           @change="(education) => setEducationForm(education, index)"
         />
@@ -199,11 +267,28 @@
       >
         <div class="person-page__header-wrapper">
           <h3>Работа {{ index + 1 }}</h3>
-          <button @click="() => removeWorkForm(index)" class="person-page__btn-close">
-            ✖
-          </button>
+          <div class="person-page__buttons-wrapper">
+            <button 
+              v-show="index !== 0"
+              class="person-page__button" 
+              @click="() => moveItem('works', index, 'up')" 
+            >
+              ⬆
+            </button>
+            <button 
+              v-show="index !== value.works.length - 1"
+              class="person-page__button" 
+              @click="() =>  moveItem('works', index, 'down')" 
+            >
+              ⬇
+            </button>
+            <button @click="() => removeWorkForm(index)" class="person-page__button">
+              ✖
+            </button>
+          </div>
         </div>
         <WorkForm
+          ref="workForm"
           :value="work"
           @change="(work) => setWorkForm(work, index)"
         />
@@ -218,13 +303,13 @@
 </template>
 
 <script>
-import MilitaryForm from '../forms/MilitaryForm.vue'
-import SimpleButton from '../ui/SimpleButton.vue'
-import WeddingForm from '../forms/WeddingForm.vue'
-import ChildForm from '../forms/ChildForm.vue'
+import MilitaryForm from '@/components/forms/MilitaryForm.vue'
+import SimpleButton from '@/components/ui/SimpleButton.vue'
+import WeddingForm from '@/components/forms/WeddingForm.vue'
+import ChildForm from '@/components/forms/ChildForm.vue'
 import { mapGetters } from 'vuex'
-import EducationForm from '../forms/EducationForm.vue'
-import WorkForm from '../forms/WorkForm.vue'
+import EducationForm from '@/components/forms/EducationForm.vue'
+import WorkForm from '@/components/forms/WorkForm.vue'
 import { emptyWedding, emptyWork, emptyMilitary, emptyEducation } from '@/services/person'
 import { parseDateString } from '@/services/datePickerOptions'
 
@@ -281,10 +366,10 @@ export default {
     },
     maidenName: {
       get () {
-        return this.value.maidenName;
+        return this.value.maidenName
       },
       set (value) {
-        this.emitFormData({ maidenName: value });
+        this.emitFormData({ maidenName: value })
       }
     },
     gender: {
@@ -410,6 +495,24 @@ export default {
         ...param
       })
     },
+    checkEmptyForms() {
+      const forms = [
+        ...this.$refs.militaryForm,
+        ...this.$refs.educationForm,
+        ...this.$refs.childForm,
+        ...this.$refs.weddingForm,
+        ...this.$refs.workForm
+      ]
+      forms.forEach(i => {
+        const r = i.validate()
+        if (r) {
+          this.$notify({
+            message: 'Ошибка: ' + r,
+            type: 'error'
+          });
+        }
+      })
+    },   
     formatDate (date) {
       if (date) {
         const getYear = parseInt(date.slice(6, 10))
@@ -503,6 +606,18 @@ export default {
       const newValue = { ...this.value }
       newValue.works.splice(index, 1)
       this.$emit('change', newValue)
+    },
+    moveItem (valueName, index, direction) {
+      const newValue = [...this.value[valueName]]
+      const temp = newValue[index]
+      if (direction === 'up') {
+        newValue[index] = newValue[index - 1]
+        newValue[index - 1] = temp
+      } else if (direction === 'down') {
+        newValue[index] = newValue[index + 1]
+        newValue[index + 1] = temp
+      }
+      this.$emit('change', { ...this.value, [valueName]: newValue })
     }
   }
 }
@@ -510,21 +625,7 @@ export default {
 
 <style scoped lang="less">
 .person-page {
-  &__btn {
-    justify-self: center;
-    padding: 10px 20px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: aqua;
-    color: black;
-    font-weight: 600;
-    cursor: pointer;
-    margin-left: 0px;
-    margin-bottom: 20px;
-  }
-
-  &__btn-close {
+  &__button {
     background: none;
     border: none;
     cursor: pointer;
@@ -537,6 +638,11 @@ export default {
 
   &__right-wrapper {
     text-align: right;
+  }
+
+  &__buttons-wrapper {
+    display: flex;
+    align-items: center;
   }
 }
 </style>
