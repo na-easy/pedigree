@@ -130,7 +130,7 @@ export default {
           this.setAccess(jsonData.access);
           this.setMode(jsonData.mode);
         }
-        catch (e){
+        catch (e) {
           console.log(e)
         }
       };

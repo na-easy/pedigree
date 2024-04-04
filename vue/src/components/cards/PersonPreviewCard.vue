@@ -69,7 +69,7 @@ export default {
       }
       return maskFio(this.person.patronymicName)
     },
-    photo (){
+    photo () {
       if (!this.needHide) {
         return this.person.photo
       }

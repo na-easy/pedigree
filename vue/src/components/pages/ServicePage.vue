@@ -18,7 +18,7 @@ export default {
     PageLayout,
     ServiceComponent
   },
-  data() {
+  data () {
     return {
       config: {
         headerBackgroundClass: 'header__background',

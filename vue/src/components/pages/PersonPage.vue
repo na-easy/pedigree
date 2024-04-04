@@ -24,7 +24,7 @@ export default {
     NavigationPanel,
     ScrollingPanel
   },
-  data() {
+  data () {
     return {
       sections: [
         { id: 'info-section', title: 'Общая информация'},

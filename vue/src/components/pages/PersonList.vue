@@ -63,10 +63,10 @@ export default {
       'filteredPersons'
     ]),
     filterRemovedData: {
-      get(){
-        this.filterRemoved.toString()
+      get () {
+        return this.filterRemoved.toString()
       },
-      set(value){
+      set (value) {
         this.filterRemoved = value == true
       }
     },
@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     searchFunc (person) {
-      if (this.search.length < 3){
+      if (this.search.length < 3) {
         return true
       }
       return this.fields.some((field) => {
